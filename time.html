@@ -1,21 +1,26 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-  <meta charset="UTF-8">
-  <title>現在時刻</title>
-</head>
-<body>
-  <h1>現在時刻</h1>
-  <p id="time"></p>
+<script src="https://unpkg.com/vue@3.5.0/dist/vue.global.js"></script>
 
-  <script>
-    function showTime() {
-      const now = new Date();
-      document.getElementById("time").textContent = now.toLocaleString();
+<div id="app">
+  <span>現在の日時: {{ currentDateTime.toLocaleString() }}</span>
+</div>
+
+<script>
+Vue.createApp({
+  data: function() {
+    return {
+      currentDateTime: new Date()
     }
+  },
 
-    showTime();
-    setInterval(showTime, 1000);
-  </script>
-</body>
-</html>
+  created: function() {
+    let self = this
+    this.timer = setInterval(function() {
+      self.currentDateTime = new Date()
+    }, 1000)
+  },
+
+  beforeUnmount: function() {
+    clearInterval(this.timer)
+  }
+}).mount("#app")
+</script>

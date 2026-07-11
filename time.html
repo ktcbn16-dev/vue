@@ -1,26 +1,36 @@
-<script src="https://unpkg.com/vue@3.5.0/dist/vue.global.js"></script>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>time.html のサンプル</title>
+  <script src="https://unpkg.com/vue@3.5.0/dist/vue.global.js"></script>
+</head>
+<body>
+  <h1>time.html</h1>
 
-<div id="app">
-  <span>現在の日時: {{ currentDateTime.toLocaleString() }}</span>
-</div>
+  <div id="app">
+    <span>現在の日時: {{ currentDateTime.toLocaleString() }}</span>
+  </div>
 
-<script>
-Vue.createApp({
-  data: function() {
-    return {
-      currentDateTime: new Date()
-    }
-  },
+  <script>
+    Vue.createApp({
+      data: function() {
+        return {
+          currentDateTime: new Date()
+        }
+      },
 
-  created: function() {
-    let self = this
-    this.timer = setInterval(function() {
-      self.currentDateTime = new Date()
-    }, 1000)
-  },
+      created: function() {
+        let self = this
+        this.timer = setInterval(function() {
+          self.currentDateTime = new Date()
+        }, 1000)
+      },
 
-  beforeUnmount: function() {
-    clearInterval(this.timer)
-  }
-}).mount("#app")
-</script>
+      beforeUnmount: function() {
+        clearInterval(this.timer)
+      }
+    }).mount("#app")
+  </script>
+</body>
+</html>

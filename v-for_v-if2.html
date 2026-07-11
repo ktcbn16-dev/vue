@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>v-for と v-if のサンプル</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://unpkg.com/vue@3.0.0/dist/vue.global.js"></script>
+</head>
+
+<body>
+  <style>
+ .green {
+    font-size   : 32pt;
+    font-weight : normal;
+    color       : green;
+  }
+
+  .blue {
+    font-size   : 24pt;
+    font-weight : bold;
+    color       : blue;
+  }
+  </style>
+
+  <h1 class="bg-primary text-white display-4 px-3">Vue3</h1>
+
+  <div id="app" class="container">     <!-- containerは文字をバランスよく中央に配置する -->
+    <p v-if="rem != 0" class="blue">   <!-- remが0じゃない時、messegeを青色にする -->
+      {{ message }}
+    </p>
+
+    <p v-else class="green">         <!-- それ以外ならmessageを緑色にする -->
+      {{ ngmessage }}
+    </p>
+
+    <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th>index</th>
+          <th>Name</th>
+          <th>mail</th>
+          <th>tel</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <template v-for="(item, index) in items">
+          <tr v-if="index % 2 == 0" class="blue">  <!-- 表の番号が偶数なら青色 -->
+            <td>{{ index }}</td>
+            <td>{{ item.name }}</td>
+            <td>{{ item.mail }}</td>
+            <td>{{ item.tel }}</td>
+          </tr>
+
+          <tr v-else class="green">               <!-- 表の番号が偶数以外なら緑色 -->
+            <td>{{ index }}</td>
+            <td>{{ item.name }}</td>
+            <td>{{ item.mail }}</td>
+            <td>{{ item.tel }}</td>
+          </tr>
+        </template>
+      </tbody>
+    </table>
+  </div>
+
+
+  <!-- scriptではバックエンドからデータを持ってくる処理を記述している -->
+  <!-- バックエンドから配列 JSON オブジェクトデータを持ってくること -->
+   <!-- 持ってきたデータを↑template↑で指定している -->
+  <script>
+    const appdata = {
+      data() {
+        return {
+          message: null,
+          ngmessage: null,
+          count: 0,
+          rem: 1,                   // remの初期値を１に設定している
+
+          items: [
+            { name: 'Yasushi', mail: 'osonoi@cu', tel: '1111' },
+            { name: 'Koh', mail: 'kojima@cu', tel: '2222' },
+            { name: 'Alice', mail: 'alice@example.com', tel: '3333' },
+            { name: 'Bob', mail: 'bob@example.com', tel: '4444' },
+            { name: 'Charlie', mail: 'charlie@example.com', tel: '5555' },
+            { name: 'David', mail: 'david@example.com', tel: '6666' },
+            { name: 'Eve', mail: 'eve@example.com', tel: '7777' },
+            { name: 'Frank', mail: 'frank@example.com', tel: '8888' },
+            { name: 'Grace', mail: 'grace@example.com', tel: '9999' },
+            { name: 'Henry', mail: 'henry@example.com', tel: '0000' }
+          ]
+        }
+      },
+
+      mounted() {
+        this.message = 'カウントスタート'
+        this.ngmessage = 'カウントリセット'
+
+        setInterval(() => {
+          this.count++
+          this.rem = this.count % 10
+          this.message = 'カウント' + this.rem + '秒経過'
+        }, 1000)
+      }
+    }
+
+    let app = Vue.createApp(appdata)
+    app.mount('#app')
+  </script>
+</body>
+</html>

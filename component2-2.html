@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>クルマの色調査</title>
+ 
+  <style>
+    .demo {
+      font-family: sans-serif;
+      border: 1px solid #eee;
+      border-radius: 2px;
+      padding: 20px 30px;
+      margin-top: 1em;
+      margin-bottom: 40px;
+      user-select: none;
+      overflow-x: auto;
+    }
+  </style>
+</head>
+
+
+<!-- ↓テンプレート（タイトルとボタン、合計の表示） -->
+<body>
+  <div id="components-demo">
+    <h1>クルマの色調査</h1>
+
+    <button-counter 
+      label="赤色のクルマ"
+      v-on:count-up="total++">
+    </button-counter>
+    <br>
+
+    <button-counter
+     label="白色のクルマ"
+     v-on:count-up="total++">
+    </button-counter>
+    <br>
+    
+    <button-counter
+     label="黒色のクルマ"
+     v-on:count-up="total++">
+    </button-counter>
+    <br>
+
+    <button-counter
+     label="その他の色のクルマ"
+     v-on:count-up="total++">
+    </button-counter>
+
+    <h2>合計台数：{{ total }}</h2>
+  </div>
+
+  <!-- ↓Bootstrapの指定 -->
+  <script src="https://cdn.jsdelivr.net/npm/vue@3.5.0/dist/vue.global.js"></script>
+
+<script>
+    const app = Vue.createApp({
+      data() {
+        return {
+          total: 0
+        };
+      }
+    });
+
+    app.component('button-counter', {
+      props: ['label'],
+
+      data() {
+        return {
+          count: 0
+        };
+      },
+
+      methods: {
+        countCar() {
+          this.count++;
+          this.$emit('count-up');
+        }
+      },
+
+      template: `
+        <button v-on:click="countCar">
+          {{ label }} : {{ count }}台 
+        </button>
+      `
+    });
+
+    app.mount('#components-demo');
+  </script>
+</body>
+</html>

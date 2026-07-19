@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>親・子コンポーネントの例</title>
+
+  <!-- Vue 3を読み込む -->
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+
+<body>
+
+  <!-- ① 親となる範囲 -->
+  <div id="app">
+    <h1>{{ title }}</h1>
+
+    <!-- ④ 子コンポーネントを呼び出す -->
+    <button-counter></button-counter>
+
+    <!-- 同じ子コンポーネントをもう一度呼び出す -->
+    <button-counter></button-counter>
+  </div>
+
+
+  <script>
+    // ② 子コンポーネントの内容を定義
+    const ButtonCounter = {
+      data() {
+        return {
+          count: 0
+        };
+      },
+
+      template: `
+        <button v-on:click="count++">
+          {{ count }}回クリック
+        </button>
+      `
+    };
+
+
+    // ③ 親となるVueアプリを作成
+    const app = Vue.createApp({
+      data() {
+        return {
+          title: "カウントアプリ"
+        };
+      },
+
+      // 子コンポーネントを親に登録
+      components: {
+        "button-counter": ButtonCounter
+      }
+    });
+
+
+    // ⑤ Vueアプリをid="app"の場所に接続
+    app.mount("#app");
+  </script>
+
+</body>
+</html>
